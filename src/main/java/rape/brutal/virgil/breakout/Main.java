@@ -7,9 +7,7 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import rape.brutal.virgil.breakout.graphic.ATSGraphic;
-import rape.brutal.virgil.breakout.graphic.AverageCarGraphic;
-import rape.brutal.virgil.breakout.graphic.BattleCarGraphic;
-import rape.brutal.virgil.breakout.graphic.BigCarGraphic;
+import rape.brutal.virgil.breakout.graphic.BorderGraphic;
 
 import java.io.IOException;
 
@@ -36,8 +34,11 @@ public class Main {
 //            BigCarGraphic bigCarGraphic = new BigCarGraphic("BigCar", terminalScreen);
 //            bigCarGraphic.draw(cursorPosition.withRelative(8, 8));
 
-            AverageCarGraphic averageCarGraphic = new AverageCarGraphic("Sedane", terminalScreen);
-            averageCarGraphic.draw(cursorPosition.withRelative(8, 8));
+//            AverageCarGraphic averageCarGraphic = new AverageCarGraphic("Sedane", terminalScreen);
+//            averageCarGraphic.draw(cursorPosition.withRelative(8, 8));
+
+            BorderGraphic borderGraphic = new BorderGraphic("Border", terminalScreen);
+            borderGraphic.draw(cursorPosition.withRelative(55, 0));
 
             terminalScreen.refresh();
 
