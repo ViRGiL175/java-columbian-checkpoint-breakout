@@ -10,9 +10,9 @@ import java.io.IOException;
  * Created by ViRGiL7 on 02.03.2017.
  * Project: columbian-checkpoint-breakout
  */
-public class ATSGraphicObject extends ASCIIGraphicObject {
+public class ATSGraphic extends ASCIIGraphic {
 
-    public ATSGraphicObject(String name, TerminalScreen terminalScreen) {
+    public ATSGraphic(String name, TerminalScreen terminalScreen) {
         super(name, terminalScreen);
     }
 

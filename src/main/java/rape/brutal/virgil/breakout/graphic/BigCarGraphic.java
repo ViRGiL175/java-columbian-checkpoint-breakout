@@ -5,9 +5,9 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 
 import java.io.IOException;
 
-public class BigCarGraphicObject extends ASCIIGraphicObject {
+public class BigCarGraphic extends ASCIIGraphic {
 
-    public BigCarGraphicObject(String name, TerminalScreen terminalScreen) {
+    public BigCarGraphic(String name, TerminalScreen terminalScreen) {
         super(name, terminalScreen);
     }
 

@@ -9,9 +9,9 @@ import java.io.IOException;
  * Created by ViRGiL7 on 02.03.2017.
  * Project: columbian-checkpoint-breakout
  */
-public class BattleCarGraphicObject extends ASCIIGraphicObject {
+public class BattleCarGraphic extends ASCIIGraphic {
 
-    public BattleCarGraphicObject(String name, TerminalScreen terminalScreen) {
+    public BattleCarGraphic(String name, TerminalScreen terminalScreen) {
         super(name, terminalScreen);
     }
 

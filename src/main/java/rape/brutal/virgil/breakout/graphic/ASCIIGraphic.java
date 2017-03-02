@@ -10,13 +10,13 @@ import java.io.IOException;
  * Created by ViRGiL7 on 02.03.2017.
  * Project: columbian-checkpoint-breakout
  */
-public abstract class ASCIIGraphicObject {
+public abstract class ASCIIGraphic {
 
     protected BasicTextImage basicTextImage;
     protected TerminalScreen terminalScreen;
     protected String name;
 
-    public ASCIIGraphicObject(String name, TerminalScreen terminalScreen) {
+    public ASCIIGraphic(String name, TerminalScreen terminalScreen) {
         this.name = name;
         this.terminalScreen = terminalScreen;
         basicTextImage = new BasicTextImage(terminalScreen.getTerminalSize());

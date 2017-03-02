@@ -6,9 +6,10 @@ import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-import rape.brutal.virgil.breakout.graphic.ATSGraphicObject;
-import rape.brutal.virgil.breakout.graphic.BattleCarGraphicObject;
-import rape.brutal.virgil.breakout.graphic.BigCarGraphicObject;
+import rape.brutal.virgil.breakout.graphic.ATSGraphic;
+import rape.brutal.virgil.breakout.graphic.AverageCarGraphic;
+import rape.brutal.virgil.breakout.graphic.BattleCarGraphic;
+import rape.brutal.virgil.breakout.graphic.BigCarGraphic;
 
 import java.io.IOException;
 
@@ -26,14 +27,17 @@ public class Main {
 
             terminalScreen.startScreen();
 
-            ATSGraphicObject atsGraphicObject = new ATSGraphicObject("ATS", terminalScreen);
+            ATSGraphic atsGraphicObject = new ATSGraphic("ATS", terminalScreen);
             atsGraphicObject.draw(cursorPosition.withRelative(6, 1));
 
-            BattleCarGraphicObject battleCarGraphicObject = new BattleCarGraphicObject("MadMax", terminalScreen);
-            battleCarGraphicObject.draw(cursorPosition.withRelative(15, 4));
+//            BattleCarGraphic battleCarGraphic = new BattleCarGraphic("MadMax", terminalScreen);
+//            battleCarGraphic.draw(cursorPosition.withRelative(15, 4));
+//
+//            BigCarGraphic bigCarGraphic = new BigCarGraphic("BigCar", terminalScreen);
+//            bigCarGraphic.draw(cursorPosition.withRelative(8, 8));
 
-            BigCarGraphicObject bigCarGraphicObject = new BigCarGraphicObject("BigCar", terminalScreen);
-            bigCarGraphicObject.draw(cursorPosition.withRelative(8, 8));
+            AverageCarGraphic averageCarGraphic = new AverageCarGraphic("Sedane", terminalScreen);
+            averageCarGraphic.draw(cursorPosition.withRelative(8, 8));
 
             terminalScreen.refresh();
 
