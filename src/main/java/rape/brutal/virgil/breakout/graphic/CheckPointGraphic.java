@@ -1,6 +1,7 @@
 package rape.brutal.virgil.breakout.graphic;
 
 import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.graphics.BasicTextImage;
 import com.googlecode.lanterna.screen.TerminalScreen;
 
 import java.io.IOException;
@@ -22,6 +23,9 @@ public class CheckPointGraphic extends ASCIIGraphic {
     }
 
     public void draw(TerminalPosition cursorPosition) throws IOException {
+
+        basicTextImage = new BasicTextImage(terminalScreen.getTerminalSize());
+
         newTextGraphics().putString(0, 0, "+");
         newTextGraphics().drawLine(1, 0, 4, 0, '-');
         newTextGraphics().putString(5, 0, "+");

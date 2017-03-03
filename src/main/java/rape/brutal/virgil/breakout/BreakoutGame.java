@@ -60,8 +60,7 @@ public class BreakoutGame {
         while (!exit) {
             createNewCar(terminalScreen);
             driveCarToCheckpoint(terminalScreen);
-            driveCarThoughCheckpoint();
-//            checkCar();
+            checkCar();
         }
     }
 
@@ -104,7 +103,7 @@ public class BreakoutGame {
 
     private boolean isLegal() {
         if (carGraphic.getClass() == AverageCarGraphic.class) {
-            return new Random().nextDouble() < 0.7;
+            return true;
         }
         return false;
     }
