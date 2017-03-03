@@ -2,6 +2,8 @@ package rape.brutal.virgil.breakout.graphic;
 
 import com.googlecode.lanterna.SGR;
 import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.screen.TerminalScreen;
 
 import java.io.IOException;
@@ -18,10 +20,12 @@ public class ATSGraphic extends ASCIIGraphic {
 
     public void draw(TerminalPosition cursorPosition) throws IOException {
 
-        basicTextImage.newTextGraphics().drawLine(2, 1, 2, 4, '|');
-        basicTextImage.newTextGraphics().drawLine(1, 4, 3, 4, '-');
-        basicTextImage.newTextGraphics().putString(2, 0, "#", SGR.BLINK);
-        basicTextImage.newTextGraphics().putString(4, 2, name);
+        basicTextImage.resize(new TerminalSize(5, 5), TextCharacter.DEFAULT_CHARACTER);
+
+        newTextGraphics().drawLine(2, 1, 2, 4, '|');
+        newTextGraphics().drawLine(1, 4, 3, 4, '-');
+        newTextGraphics().putString(2, 0, "#", SGR.BLINK);
+        newTextGraphics().putString(4, 2, name);
 
         terminalScreen.newTextGraphics().drawImage(cursorPosition, basicTextImage);
     }
