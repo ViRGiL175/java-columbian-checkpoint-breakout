@@ -65,6 +65,7 @@ public class BreakoutGame {
     }
 
     private void checkCar() {
+        say(checkPointGraphic, "Let's check your car!");
         if (!isBreakout()) {
             if (!isLegal()) {
                 breakout();
@@ -211,16 +212,35 @@ public class BreakoutGame {
     private void tinyWait() {
         try {
             sleep(200);
-        } catch (InterruptedException var1) {
-            var1.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
     private void shortWait() {
         try {
             sleep(500);
-        } catch (InterruptedException var1) {
-            var1.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
+
+    private void longWait() {
+        try {
+            sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void say(INameable iNameable, String text) {
+        try {
+            terminalScreen.newTextGraphics().putString(3, 20, iNameable.getName() + ": " + text);
+            terminalScreen.refresh();
+            longWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

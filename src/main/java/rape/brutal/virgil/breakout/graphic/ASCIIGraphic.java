@@ -4,6 +4,7 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.graphics.BasicTextImage;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.TerminalScreen;
+import rape.brutal.virgil.breakout.INameable;
 
 import java.io.IOException;
 
@@ -11,7 +12,7 @@ import java.io.IOException;
  * Created by ViRGiL7 on 02.03.2017.
  * Project: columbian-checkpoint-breakout
  */
-public abstract class ASCIIGraphic {
+public abstract class ASCIIGraphic implements INameable {
 
     protected BasicTextImage basicTextImage;
     protected TerminalScreen terminalScreen;
@@ -35,6 +36,10 @@ public abstract class ASCIIGraphic {
 
     public BasicTextImage getBasicTextImage() {
         return basicTextImage;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public abstract void draw(TerminalPosition cursorPosition) throws IOException;
