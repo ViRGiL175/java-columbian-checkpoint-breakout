@@ -24,28 +24,48 @@ public class CheckPointGraphic extends ASCIIGraphic {
 
     public void draw(TerminalPosition cursorPosition) throws IOException {
 
-        basicTextImage = new BasicTextImage(terminalScreen.getTerminalSize());
+        if (isDestroyed()) {
+            if (!isBlown) {
+                terminalScreen.getTerminal().bell();
+                isBlown = true;
+            } else {
+                basicTextImage = new BasicTextImage(terminalScreen.getTerminalSize());
 
-        newTextGraphics().putString(0, 0, "+");
-        newTextGraphics().drawLine(1, 0, 4, 0, '-');
-        newTextGraphics().putString(5, 0, "+");
-        newTextGraphics().drawLine(5, 1, 5, 2, '|');
-        newTextGraphics().putString(0, 3, "+");
-        newTextGraphics().drawLine(1, 3, 4, 3, '-');
-        newTextGraphics().putString(5, 3, "+");
-        newTextGraphics().putString(0, 2, "|");
-        newTextGraphics().putString(0, 1, "_");
-        newTextGraphics().putString(1, 1, "_");
-        newTextGraphics().putString(2, 1, "_");
-        newTextGraphics().putString(3, 1, "|");
+                newTextGraphics().drawLine(5, 1, 5, 2, '|');
+                newTextGraphics().putString(0, 3, "+");
+                newTextGraphics().drawLine(1, 3, 4, 3, '-');
+                newTextGraphics().putString(0, 2, "|");
+                newTextGraphics().putString(0, 1, "_");
+                newTextGraphics().putString(3, 1, "|");
 
-        if (isClosed) {
-            newTextGraphics().drawLine(2, 2, 10, 2, '=');
+                terminalScreen.newTextGraphics().drawImage(cursorPosition, basicTextImage);
+            }
+
         } else {
-            newTextGraphics().drawLine(2, 2, 15, -3, '=');
-        }
 
-        terminalScreen.newTextGraphics().drawImage(cursorPosition, basicTextImage);
+            basicTextImage = new BasicTextImage(terminalScreen.getTerminalSize());
+
+            newTextGraphics().putString(0, 0, "+");
+            newTextGraphics().drawLine(1, 0, 4, 0, '-');
+            newTextGraphics().putString(5, 0, "+");
+            newTextGraphics().drawLine(5, 1, 5, 2, '|');
+            newTextGraphics().putString(0, 3, "+");
+            newTextGraphics().drawLine(1, 3, 4, 3, '-');
+            newTextGraphics().putString(5, 3, "+");
+            newTextGraphics().putString(0, 2, "|");
+            newTextGraphics().putString(0, 1, "_");
+            newTextGraphics().putString(1, 1, "_");
+            newTextGraphics().putString(2, 1, "_");
+            newTextGraphics().putString(3, 1, "|");
+
+            if (isClosed) {
+                newTextGraphics().drawLine(2, 2, 10, 2, '=');
+            } else {
+                newTextGraphics().drawLine(2, 2, 15, -3, '=');
+            }
+
+            terminalScreen.newTextGraphics().drawImage(cursorPosition, basicTextImage);
+        }
     }
 
 }
