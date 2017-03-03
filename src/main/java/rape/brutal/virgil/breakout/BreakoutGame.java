@@ -1,6 +1,8 @@
 package rape.brutal.virgil.breakout;
 
 import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
@@ -15,7 +17,7 @@ import static java.lang.Thread.sleep;
  * Created by ViRGiL7 on 03.03.2017.
  * Project: columbian-checkpoint-breakout
  */
-public class BreakoutGame {
+public class BreakoutGame implements INameable {
 
     public static final TerminalPosition DEFAULT_CAR_POSITION = new TerminalPosition(2, 9);
 
@@ -104,19 +106,29 @@ public class BreakoutGame {
 
     private boolean isLegal() {
         if (carGraphic.getClass() == AverageCarGraphic.class) {
+            say(checkPointGraphic, "It's OK with your documents and goods.");
             return true;
         }
+        say(checkPointGraphic, "I can't pass you though, it is illegal stuff...");
         return false;
     }
 
 
     private void breakout() {
+        say(checkPointGraphic, "They breaking out!!!");
 
     }
 
     private boolean isBreakout() {
         if (carGraphic.getClass() == AverageCarGraphic.class) {
             return false;
+        }
+        try {
+            say(this, "Should we breaks though? (Enter / n)");
+            KeyStroke keyStroke = terminalScreen.readInput();
+            return keyStroke.getKeyType() == KeyType.Enter;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return true;
     }
@@ -238,9 +250,14 @@ public class BreakoutGame {
             terminalScreen.newTextGraphics().putString(3, 20, iNameable.getName() + ": " + text);
             terminalScreen.refresh();
             longWait();
+            terminalScreen.clear();
+            drawBattleScreen(terminalScreen);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public String getName() {
+        return "Gabriela";
+    }
 }

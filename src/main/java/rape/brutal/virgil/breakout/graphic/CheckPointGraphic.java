@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class CheckPointGraphic extends ASCIIGraphic {
 
-    private boolean isClosed;
+    private boolean isClosed = true;
 
     public CheckPointGraphic(String name, TerminalScreen terminalScreen) {
         super(name, terminalScreen);
