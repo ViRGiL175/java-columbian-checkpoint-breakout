@@ -10,10 +10,19 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 public abstract class CarGraphic extends ASCIIGraphic {
 
     private TerminalPosition position = new TerminalPosition(0, 0);
+    private boolean passed;
 
     public CarGraphic(TerminalPosition terminalPosition, String name, TerminalScreen terminalScreen) {
         super(name, terminalScreen);
         position = terminalPosition;
+    }
+
+    public boolean isPassed() {
+        return passed;
+    }
+
+    public void setPassed(boolean passed) {
+        this.passed = passed;
     }
 
     public TerminalPosition getPosition() {

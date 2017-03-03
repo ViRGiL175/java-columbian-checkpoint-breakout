@@ -26,6 +26,7 @@ public class BreakoutGame {
     private CarGraphic carGraphic;
     private CheckPointGraphic checkPointGraphic;
     private GarageGraphic garageGraphic;
+    private boolean exit;
 
     public BreakoutGame() {
         try {
@@ -54,19 +55,81 @@ public class BreakoutGame {
         }
     }
 
-    private void battleScreen(TerminalScreen terminalScreen) throws IOException {
+    private void battleScreen(TerminalScreen terminalScreen) {
+        initGraphic(terminalScreen);
+        while (!exit) {
+            createNewCar(terminalScreen);
+            driveCarToCheckpoint(terminalScreen);
+            driveCarThoughCheckpoint();
+//            checkCar();
+        }
+    }
+
+    private void checkCar() {
+        if (!isBreakout()) {
+            if (!isLegal()) {
+                breakout();
+            } else {
+                passThough();
+            }
+        } else {
+            breakout();
+        }
+    }
+
+    private void passThough() {
+        if (!checkPointGraphic.isDestroyed()) {
+            checkPointGraphic.setClosed(false);
+            drawBattleScreen(terminalScreen);
+            shortWait();
+            driveCarThoughCheckpoint();
+            shortWait();
+            checkPointGraphic.setClosed(true);
+            drawBattleScreen(terminalScreen);
+        } else {
+            driveCarThoughCheckpoint();
+        }
+    }
+
+    private void driveCarThoughCheckpoint() {
+        carGraphic.setPassed(true);
+        for (int i = 0; i < 42; i++) {
+            TerminalPosition position = new TerminalPosition(carGraphic.getPosition().getColumn() + 1,
+                    carGraphic.getPosition().getRow());
+            carGraphic.setPosition(position);
+            drawBattleScreen(terminalScreen);
+        }
+        carGraphic.setPassed(false);
+    }
+
+    private boolean isLegal() {
+        if (carGraphic.getClass() == AverageCarGraphic.class) {
+            return new Random().nextDouble() < 0.7;
+        }
+        return false;
+    }
+
+
+    private void breakout() {
+
+    }
+
+    private boolean isBreakout() {
+        if (carGraphic.getClass() == AverageCarGraphic.class) {
+            return false;
+        }
+        return true;
+    }
+
+    private void initGraphic(TerminalScreen terminalScreen) {
         ats1Graphic = new ATSGraphic("ATS1", terminalScreen);
         ats2Graphic = new ATSGraphic("ATS2", terminalScreen);
         ats3Graphic = new ATSGraphic("ATS3", terminalScreen);
         checkPointGraphic = new CheckPointGraphic("Columbian Checkpoint", terminalScreen);
         garageGraphic = new GarageGraphic("Bandits Garage", terminalScreen);
-
-        createNewCar(terminalScreen);
-
-        driveCarToCheckpoint(terminalScreen);
     }
 
-    private void driveCarToCheckpoint(TerminalScreen terminalScreen) throws IOException {
+    private void driveCarToCheckpoint(TerminalScreen terminalScreen) {
         for (int i = 0; i < 42; i++) {
             TerminalPosition position = new TerminalPosition(carGraphic.getPosition().getColumn() + 1,
                     carGraphic.getPosition().getRow());
@@ -75,7 +138,7 @@ public class BreakoutGame {
         }
     }
 
-    private void createNewCar(TerminalScreen terminalScreen) throws IOException {
+    private void createNewCar(TerminalScreen terminalScreen) {
         Random random = new Random();
         if (random.nextBoolean()) {
             carGraphic = new BigCarGraphic(DEFAULT_CAR_POSITION, "Semyon and Family", terminalScreen);
@@ -100,40 +163,49 @@ public class BreakoutGame {
 
     }
 
-    private void drawBattleScreen(TerminalScreen terminalScreen) throws IOException {
+    private void drawBattleScreen(TerminalScreen terminalScreen) {
+        try {
 
-        garageGraphic.draw(new TerminalPosition(2, 6));
+            garageGraphic.draw(new TerminalPosition(2, 6));
 
-        ats1Graphic.draw(new TerminalPosition(16, 1));
+            ats1Graphic.draw(new TerminalPosition(16, 1));
 
-        ats2Graphic.draw(new TerminalPosition(28, 4));
+            ats2Graphic.draw(new TerminalPosition(28, 4));
 
-        ats3Graphic.draw(new TerminalPosition(44, 2));
+            ats3Graphic.draw(new TerminalPosition(44, 2));
 
-        terminalScreen.newTextGraphics().drawLine(55, 0, 55, 6, '#');
+            terminalScreen.newTextGraphics().drawLine(55, 0, 55, 6, '#');
 
-        if (carGraphic != null) {
-            terminalScreen.newTextGraphics().drawLine(0, 10, carGraphic.getPosition().getColumn(), 10, '.');
-            carGraphic.draw(carGraphic.getPosition());
-            terminalScreen.newTextGraphics().drawLine(carGraphic.getPosition().getColumn() + 6, 10, 53, 10, '.');
-        } else {
-            terminalScreen.newTextGraphics().drawLine(0, 10, DEFAULT_CAR_POSITION.getColumn(), 10, '.');
-            terminalScreen.newTextGraphics().drawLine(DEFAULT_CAR_POSITION.getColumn() + 6, 10, 53, 10, '.');
+            if ((carGraphic != null) && (!carGraphic.isPassed())) {
+                terminalScreen.newTextGraphics().drawLine(0, 10, carGraphic.getPosition().getColumn(), 10, '.');
+                carGraphic.draw(carGraphic.getPosition());
+                terminalScreen.newTextGraphics().drawLine(carGraphic.getPosition().getColumn() + 6, 10, 53, 10, '.');
+            } else {
+                terminalScreen.newTextGraphics().drawLine(0, 10, DEFAULT_CAR_POSITION.getColumn(), 10, '.');
+                terminalScreen.newTextGraphics().drawLine(DEFAULT_CAR_POSITION.getColumn() + 6, 10, 53, 10, '.');
+            }
+
+            terminalScreen.newTextGraphics().drawLine(57, 10, terminalScreen.getTerminalSize().getColumns(), 10, '.');
+
+            checkPointGraphic.draw(new TerminalPosition(53, 7));
+
+            if ((carGraphic != null) && (carGraphic.isPassed())) {
+                carGraphic.draw(carGraphic.getPosition());
+            }
+            terminalScreen.newTextGraphics().drawLine(55, 12, 55, terminalScreen.getTerminalSize().getRows(), '#');
+
+            terminalScreen.newTextGraphics().drawLine(0, 13, 53, 13, '.');
+
+            terminalScreen.newTextGraphics().drawLine(57, 13, terminalScreen.getTerminalSize().getColumns(), 13, '.');
+
+
+            terminalScreen.refresh();
+
+            tinyWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        terminalScreen.newTextGraphics().drawLine(57, 10, terminalScreen.getTerminalSize().getColumns(), 10, '.');
-
-        checkPointGraphic.draw(new TerminalPosition(53, 7));
-
-        terminalScreen.newTextGraphics().drawLine(55, 12, 55, terminalScreen.getTerminalSize().getRows(), '#');
-
-        terminalScreen.newTextGraphics().drawLine(0, 13, 53, 13, '.');
-
-        terminalScreen.newTextGraphics().drawLine(57, 13, terminalScreen.getTerminalSize().getColumns(), 13, '.');
-
-        terminalScreen.refresh();
-
-        tinyWait();
 
     }
 

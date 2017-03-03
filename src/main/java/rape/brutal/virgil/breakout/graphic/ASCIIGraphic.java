@@ -25,6 +25,10 @@ public abstract class ASCIIGraphic {
         basicTextImage = new BasicTextImage(terminalScreen.getTerminalSize());
     }
 
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
+
     public void setDestroyed(boolean destroyed) {
         isDestroyed = destroyed;
     }
