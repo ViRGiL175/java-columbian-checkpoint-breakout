@@ -32,4 +32,5 @@ public abstract class CarGraphic extends ASCIIGraphic {
     public void setPosition(TerminalPosition position) {
         this.position = position;
     }
+
 }

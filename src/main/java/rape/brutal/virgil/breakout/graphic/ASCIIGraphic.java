@@ -19,6 +19,7 @@ public abstract class ASCIIGraphic implements INameable {
     protected String name;
     protected boolean isDestroyed;
     protected boolean isBlown;
+    private boolean attack;
 
     public ASCIIGraphic(String name, TerminalScreen terminalScreen) {
         this.name = name;
@@ -48,5 +49,16 @@ public abstract class ASCIIGraphic implements INameable {
         return basicTextImage.newTextGraphics();
     }
 
+    protected void attack() {
+
+    }
+
+    public boolean isAttack() {
+        return attack;
+    }
+
+    public void setAttack(boolean attack) {
+        this.attack = attack;
+    }
 }
 

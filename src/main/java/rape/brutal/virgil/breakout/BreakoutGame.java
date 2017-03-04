@@ -116,7 +116,16 @@ public class BreakoutGame implements INameable {
 
     private void breakout() {
         say(checkPointGraphic, "They breaking out!!!");
+        say(carGraphic, "Die, capitalists!");
+        attack(carGraphic);
+        attack(checkPointGraphic);
+    }
 
+    private void attack(ASCIIGraphic asciiGraphic) {
+        asciiGraphic.setAttack(true);
+        drawBattleScreen(terminalScreen);
+        asciiGraphic.setAttack(false);
+        drawBattleScreen(terminalScreen);
     }
 
     private boolean isBreakout() {
