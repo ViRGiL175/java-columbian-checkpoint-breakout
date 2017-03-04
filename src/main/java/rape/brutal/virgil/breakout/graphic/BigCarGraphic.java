@@ -17,19 +17,19 @@ public class BigCarGraphic extends CarGraphic {
         try {
             terminalScreen.getTerminal().bell();
 
-            newTextGraphics().putString(0, 3, Character.toString((char) 34), SGR.BOLD);
-            newTextGraphics().putString(1, 3, "O");
-            newTextGraphics().putString(2, 3, Character.toString((char) 61), SGR.BOLD);
+            newTextGraphics().putString(1, 3, Character.toString((char) 34), SGR.BOLD);
+            newTextGraphics().putString(2, 3, "O");
             newTextGraphics().putString(3, 3, Character.toString((char) 61), SGR.BOLD);
-            newTextGraphics().putString(4, 3, Character.toString((char) 173), SGR.BOLD);
-            newTextGraphics().putString(5, 3, "O");
-            newTextGraphics().putString(6, 3, Character.toString((char) 166), SGR.BOLD);
-            newTextGraphics().putString(0, 2, Character.toString((char) 43), SGR.BOLD);
+            newTextGraphics().putString(4, 3, Character.toString((char) 61), SGR.BOLD);
+            newTextGraphics().putString(5, 3, Character.toString((char) 173), SGR.BOLD);
+            newTextGraphics().putString(6, 3, "O");
+            newTextGraphics().putString(7, 3, Character.toString((char) 166), SGR.BOLD);
             newTextGraphics().putString(1, 2, Character.toString((char) 43), SGR.BOLD);
             newTextGraphics().putString(2, 2, Character.toString((char) 43), SGR.BOLD);
             newTextGraphics().putString(3, 2, Character.toString((char) 43), SGR.BOLD);
-            newTextGraphics().putString(4, 2, Character.toString((char) 165), SGR.BOLD);
-            newTextGraphics().putString(5, 2, Character.toString((char) 166), SGR.BOLD);
+            newTextGraphics().putString(4, 2, Character.toString((char) 43), SGR.BOLD);
+            newTextGraphics().putString(5, 2, Character.toString((char) 165), SGR.BOLD);
+            newTextGraphics().putString(6, 2, Character.toString((char) 166), SGR.BOLD);
         } catch (IOException e) {
             e.printStackTrace();
         }

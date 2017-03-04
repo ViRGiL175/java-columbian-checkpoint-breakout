@@ -28,7 +28,9 @@ public class BreakoutGame implements INameable {
     private CarGraphic carGraphic;
     private CheckPointGraphic checkPointGraphic;
     private GarageGraphic garageGraphic;
+
     private boolean exit;
+    private int money = 10000;
 
     public BreakoutGame() {
         try {
@@ -102,6 +104,29 @@ public class BreakoutGame implements INameable {
             drawBattleScreen(terminalScreen);
         }
         carGraphic.setPassed(false);
+        if (carGraphic.getClass() == BigCarGraphic.class) {
+            say(this, "We sold drugs and bailed out " + 4000 + " peso.");
+            money += 4000;
+        }
+        if (carGraphic.getClass() == BattleCarGraphic.class) {
+            damageToMansion();
+        }
+    }
+
+    private void damageToMansion() {
+        String delPutoName = "Boss Ricardo del Puto";
+        say(delPutoName, "My perfect mansion!!! Noo!!!");
+//        for (Apt apt : apts) {
+//            if (car.getCondition() > apt.getCondition()) {
+//                car.setCondition(apt.getCondition());
+//                apt.condition = 0;
+//                say(delPutoName, "No!!! My perfect " + apt.getName + "!!!");
+//            }
+//        }
+//        if (apt.cost < 5000) {
+//            say(delPutoName, "*Ricardo killed himself*");
+//            win();
+//        }
     }
 
     private boolean isLegal() {
@@ -116,16 +141,22 @@ public class BreakoutGame implements INameable {
 
     private void breakout() {
         say(checkPointGraphic, "They breaking out!!!");
-        say(carGraphic, "Die, capitalists!");
+        say(carGraphic, "Die!");
         attack(carGraphic);
         attack(checkPointGraphic);
+//        while (checkpoint.getLaMorale() > 0) {
+//            attack(carGraphic);
+//            attack(checkPointGraphic);
+//        }
     }
 
     private void attack(ASCIIGraphic asciiGraphic) {
         asciiGraphic.setAttack(true);
         drawBattleScreen(terminalScreen);
+        tinyWait();
         asciiGraphic.setAttack(false);
         drawBattleScreen(terminalScreen);
+        tinyWait();
     }
 
     private boolean isBreakout() {
@@ -147,7 +178,7 @@ public class BreakoutGame implements INameable {
         ats2Graphic = new ATSGraphic("ATS2", terminalScreen);
         ats3Graphic = new ATSGraphic("ATS3", terminalScreen);
         checkPointGraphic = new CheckPointGraphic("Columbian Checkpoint", terminalScreen);
-        garageGraphic = new GarageGraphic("Bandits Garage", terminalScreen);
+        garageGraphic = new GarageGraphic("El Cabrons Garage", terminalScreen);
     }
 
     private void driveCarToCheckpoint(TerminalScreen terminalScreen) {
@@ -162,11 +193,11 @@ public class BreakoutGame implements INameable {
     private void createNewCar(TerminalScreen terminalScreen) {
         Random random = new Random();
         if (random.nextBoolean()) {
-            carGraphic = new BigCarGraphic(DEFAULT_CAR_POSITION, "Semyon and Family", terminalScreen);
+            buildCar(2000, new BigCarGraphic(DEFAULT_CAR_POSITION, "Mad El Burro", terminalScreen));
         } else if (random.nextBoolean()) {
-            carGraphic = new BattleCarGraphic(DEFAULT_CAR_POSITION, "Semyon and Family", terminalScreen);
+            buildCar(2500, new BattleCarGraphic(DEFAULT_CAR_POSITION, "Mad Max", terminalScreen));
         } else {
-            carGraphic = new AverageCarGraphic(DEFAULT_CAR_POSITION, "Semyon and Family", terminalScreen);
+            carGraphic = new AverageCarGraphic(DEFAULT_CAR_POSITION, "Fernando and Family", terminalScreen);
         }
 
         if (carGraphic.getClass() != AverageCarGraphic.class) {
@@ -175,9 +206,16 @@ public class BreakoutGame implements INameable {
             shortWait();
             drawBattleScreen(terminalScreen);
             garageGraphic.setClosed(true);
+            say(garageGraphic, "Looks like new!");
             drawBattleScreen(terminalScreen);
-            shortWait();
         }
+    }
+
+    private void buildCar(int carCost, CarGraphic carGraphic) {
+        say(garageGraphic, "Let's build it from true mexican garbage!");
+        this.carGraphic = carGraphic;
+        money -= carCost;
+        say(garageGraphic, "It cost " + carCost + " for you, amigo!");
     }
 
     private void mainMenu(TerminalScreen terminalScreen) {
@@ -186,6 +224,8 @@ public class BreakoutGame implements INameable {
 
     private void drawBattleScreen(TerminalScreen terminalScreen) {
         try {
+
+            terminalScreen.newTextGraphics().putString(1, 0, money + " peso");
 
             garageGraphic.draw(new TerminalPosition(2, 6));
 
@@ -218,7 +258,6 @@ public class BreakoutGame implements INameable {
             terminalScreen.newTextGraphics().drawLine(0, 13, 53, 13, '.');
 
             terminalScreen.newTextGraphics().drawLine(57, 13, terminalScreen.getTerminalSize().getColumns(), 13, '.');
-
 
             terminalScreen.refresh();
 
@@ -255,8 +294,13 @@ public class BreakoutGame implements INameable {
     }
 
     public void say(INameable iNameable, String text) {
+        String name = iNameable.getName();
+        say(name, text);
+    }
+
+    public void say(String name, String text) {
         try {
-            terminalScreen.newTextGraphics().putString(3, 20, iNameable.getName() + ": " + text);
+            terminalScreen.newTextGraphics().putString(3, 20, name + ": " + text);
             terminalScreen.refresh();
             longWait();
             terminalScreen.clear();
