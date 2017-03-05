@@ -28,6 +28,7 @@ public class BreakoutGame implements INameable {
     private CarGraphic carGraphic;
     private CheckPointGraphic checkPointGraphic;
     private GarageGraphic garageGraphic;
+    private MansionGraphic mansionGraphic;
 
     private boolean exit;
     private int money = 10000;
@@ -179,6 +180,7 @@ public class BreakoutGame implements INameable {
         ats3Graphic = new ATSGraphic("ATS3", terminalScreen);
         checkPointGraphic = new CheckPointGraphic("Columbian Checkpoint", terminalScreen);
         garageGraphic = new GarageGraphic("El Cabrons Garage", terminalScreen);
+        mansionGraphic = new MansionGraphic("Fernando", terminalScreen);
     }
 
     private void driveCarToCheckpoint(TerminalScreen terminalScreen) {
@@ -256,6 +258,8 @@ public class BreakoutGame implements INameable {
             terminalScreen.newTextGraphics().drawLine(55, 12, 55, terminalScreen.getTerminalSize().getRows(), '#');
 
             terminalScreen.newTextGraphics().drawLine(0, 13, 53, 13, '.');
+
+            mansionGraphic.draw(new TerminalPosition(terminalScreen.getTerminalSize().getColumns() - 15, 2));
 
             terminalScreen.newTextGraphics().drawLine(57, 13, terminalScreen.getTerminalSize().getColumns(), 13, '.');
 
