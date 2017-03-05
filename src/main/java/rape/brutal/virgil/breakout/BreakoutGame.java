@@ -6,6 +6,17 @@ import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+import rape.brutal.alex.evaluator.ApartmentBuilding;
+import rape.brutal.alex.evaluator.ApartmentEvaluator;
+import rape.brutal.alex.evaluator.BuildingType;
+import rape.brutal.alex.evaluator.Helper;
+import rape.brutal.haze.pc.constructor.Engineer;
+import rape.brutal.punydevil.communications.infrastructure.ATS;
+import rape.brutal.punydevil.communications.phone.Iphone;
+import rape.brutal.punydevil.communications.phone.NoNamePhone;
+import rape.brutal.punydevil.communications.phone.hardware.SIM;
+import rape.brutal.punydevil.communications.users.User;
+import rape.brutal.stephan.checkpoint.CheckPoint;
 import rape.brutal.virgil.breakout.graphic.*;
 
 import java.io.IOException;
@@ -20,7 +31,13 @@ import static java.lang.Thread.sleep;
 public class BreakoutGame implements INameable {
 
     public static final TerminalPosition DEFAULT_CAR_POSITION = new TerminalPosition(2, 9);
+    public static final int GABRIELA_NUMBER = 4567;
+    public static final int FERNANDO_NUMBER = 674566;
+    public static final int ENGINEER_NUMBER = 837687;
+    public static final int CHECKPOINT_HIT_POINTS = 500;
+    public static final int CHECKPOINT_DAMAGE = 400;
 
+    //    Graphic
     private TerminalScreen terminalScreen;
     private ATSGraphic ats1Graphic;
     private ATSGraphic ats2Graphic;
@@ -30,8 +47,22 @@ public class BreakoutGame implements INameable {
     private GarageGraphic garageGraphic;
     private MansionGraphic mansionGraphic;
 
+    //    Gameplay
     private boolean exit;
     private int money = 10000;
+    //    Buildings
+    private ApartmentBuilding apartmentBuilding = Helper.build("Mexico, Taco st. 45-67",
+            BuildingType.INDIVIDUAL, true, true, 1, true,
+            true, 4, 4, 3);
+    private ATS ats1 = new ATS();
+    private ATS ats2 = new ATS();
+    private ATS ats3 = new ATS();
+    private CheckPoint mexicanCheckpoint = new CheckPoint(CHECKPOINT_HIT_POINTS, CHECKPOINT_DAMAGE);
+    //    Characters
+    private ApartmentEvaluator delgadoEvaluator = new ApartmentEvaluator();
+    private Engineer carlosEngineer = new Engineer(/*new NoNamePhone(new SIM(ENGINEER_NUMBER))*/);
+    private User gabrielaRebel = new User(new NoNamePhone(new SIM(GABRIELA_NUMBER)));
+    private User fernandoBoss = new User(new Iphone(new SIM(FERNANDO_NUMBER)));
 
     public BreakoutGame() {
         try {
@@ -70,30 +101,34 @@ public class BreakoutGame implements INameable {
     }
 
     private void checkCar() {
-        say(checkPointGraphic, "Let's check your car!");
-        if (!isBreakout()) {
-            if (!isLegal()) {
-                breakout();
+        if (!checkPointGraphic.isDestroyed()) {
+            say(checkPointGraphic, "Let's check your car!");
+            if (!isBreakout()) {
+                if (!isLegal()) {
+                    if (breakout()) {
+                        passThough();
+                    }
+                } else {
+                    passThough();
+                }
             } else {
-                passThough();
+                breakout();
             }
         } else {
-            breakout();
+            passThough();
+            mansionGraphic.setDestroyed(true);
+            drawBattleScreen(terminalScreen);
         }
     }
 
     private void passThough() {
-        if (!checkPointGraphic.isDestroyed()) {
-            checkPointGraphic.setClosed(false);
-            drawBattleScreen(terminalScreen);
-            shortWait();
-            driveCarThoughCheckpoint();
-            shortWait();
-            checkPointGraphic.setClosed(true);
-            drawBattleScreen(terminalScreen);
-        } else {
-            driveCarThoughCheckpoint();
-        }
+        checkPointGraphic.setClosed(false);
+        drawBattleScreen(terminalScreen);
+        shortWait();
+        driveCarThoughCheckpoint();
+        shortWait();
+        checkPointGraphic.setClosed(true);
+        drawBattleScreen(terminalScreen);
     }
 
     private void driveCarThoughCheckpoint() {
@@ -117,6 +152,10 @@ public class BreakoutGame implements INameable {
     private void damageToMansion() {
         String delPutoName = "Boss Ricardo del Puto";
         say(delPutoName, "My perfect mansion!!! Noo!!!");
+        mansionGraphic.setDestroyed(true);
+        drawBattleScreen(terminalScreen);
+        tinyWait();
+        drawBattleScreen(terminalScreen);
 //        for (Apt apt : apts) {
 //            if (car.getCondition() > apt.getCondition()) {
 //                car.setCondition(apt.getCondition());
@@ -140,11 +179,16 @@ public class BreakoutGame implements INameable {
     }
 
 
-    private void breakout() {
+    private boolean breakout() {
         say(checkPointGraphic, "They breaking out!!!");
         say(carGraphic, "Die!");
         attack(carGraphic);
         attack(checkPointGraphic);
+        checkPointGraphic.setDestroyed(true);
+        drawBattleScreen(terminalScreen);
+        tinyWait();
+        drawBattleScreen(terminalScreen);
+        return true;
 //        while (checkpoint.getLaMorale() > 0) {
 //            attack(carGraphic);
 //            attack(checkPointGraphic);
@@ -252,14 +296,15 @@ public class BreakoutGame implements INameable {
 
             checkPointGraphic.draw(new TerminalPosition(53, 7));
 
+            mansionGraphic.draw(new TerminalPosition(terminalScreen.getTerminalSize().getColumns() - 15, 2));
+
             if ((carGraphic != null) && (carGraphic.isPassed())) {
                 carGraphic.draw(carGraphic.getPosition());
             }
+
             terminalScreen.newTextGraphics().drawLine(55, 12, 55, terminalScreen.getTerminalSize().getRows(), '#');
 
             terminalScreen.newTextGraphics().drawLine(0, 13, 53, 13, '.');
-
-            mansionGraphic.draw(new TerminalPosition(terminalScreen.getTerminalSize().getColumns() - 15, 2));
 
             terminalScreen.newTextGraphics().drawLine(57, 13, terminalScreen.getTerminalSize().getColumns(), 13, '.');
 

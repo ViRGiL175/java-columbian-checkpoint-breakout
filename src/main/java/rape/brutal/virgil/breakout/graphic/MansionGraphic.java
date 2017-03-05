@@ -14,6 +14,15 @@ public class MansionGraphic extends ASCIIGraphic {
 
     public void draw(TerminalPosition cursorPosition) throws IOException {
 
+        if (isDestroyed()) {
+            if (!isBlown) {
+                terminalScreen.getTerminal().bell();
+                isBlown = true;
+            } else {
+
+            }
+        }
+
         basicTextImage = new BasicTextImage(terminalScreen.getTerminalSize());
 
         newTextGraphics().putString(1, 0, "+");
