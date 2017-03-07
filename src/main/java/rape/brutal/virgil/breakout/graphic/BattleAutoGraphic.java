@@ -10,9 +10,9 @@ import java.io.IOException;
  * Created by ViRGiL7 on 02.03.2017.
  * Project: columbian-checkpoint-breakout
  */
-public class BattleCarGraphic extends CarGraphic {
+public class BattleAutoGraphic extends AutoGraphic {
 
-    public BattleCarGraphic(TerminalPosition terminalPosition, String name, TerminalScreen terminalScreen) {
+    public BattleAutoGraphic(TerminalPosition terminalPosition, String name, TerminalScreen terminalScreen) {
         super(terminalPosition, name, terminalScreen);
     }
 

@@ -1,0 +1,152 @@
+@startuml
+
+package rape.brutal.punydevil.communications.users {
+
+    +class User {
+        -Phone userPhone;
+    
+        +User(Phone userPhone);
+    
+        void pressPowerButton();
+    
+        +void playGame();
+    
+        +void call(int number);
+    
+        +void SMS(int number, String text);
+    
+        +void charge();
+    
+        +void watchTV(int number);
+    }
+    
+    +class Girl extends User {
+        +Girl(Iphone userPhone);
+    }
+    
+    +class Redneck extends User {
+        +Redneck(Phone userPhone);
+    }
+    
+    +class RussianGangster extends User {
+        +RussianGangster(Phone userPhone);
+    }
+    
+    +class Geek extends User {
+        +Geek(NoNamePhone userPhone);
+    }
+
+}
+
+package rape.brutal.punydevil.communications.phone {
+    +class Iphone extends Phone {
+        +Iphone(SIM sim);
+
+        void FingerPrint();
+
+        +void startGame();
+
+        +void unlock();
+    }
+
+    +abstract class Phone {
+        -boolean isTurnedOn = false;
+        -boolean isUnlock = false;
+        - SIM sim;
+        - IConnector activeAts;
+        - Display display = new Display();
+        - Accumulator accumulator = new Accumulator();
+        - CPU cpu = new CPU();
+        - RadioModule radioModule = new RadioModule();
+        - Memory memory = new Memory();
+
+        +Phone(SIM sim);
+
+        +void setActiveAts(IConnector activeAts);
+
+        +void phoneCall(int contactNumber);
+
+        +void phoneSMS(String text, int contactNumber);
+
+        +void receiveCall(String text, int contactNumber);
+
+        +void receiveSMS(String text, int contactNumber);
+
+        +int getNumber();
+
+        +void turnOn();
+
+        +void turnOff();
+
+        +void charge();
+
+        +void startGame();
+
+        +void unlock();
+    }
+
+    +class NoNamePhone extends Phone {
+        -IBroadcaster iBroadcaster;
+
+        +NoNamePhone(SIM sim);
+
+        +void setBroadcaster(IBroadcaster iBroadcaster);
+
+        +void unlock();
+
+        +void startGame();
+
+        +void watchTv(int number);
+    }
+
+}
+
+package rape.brutal.punydevil.communications.infrastructure; {
+
+    ICallable <|.... Phone
+
+    +class ATS implements IConnector {
+        -HashMap<Integer, ICallable> iCallableHashMap = new HashMap<>();
+    
+        +ATS();
+    
+        +void call(String text, int callerNumber, int contactNumber);
+    
+        +void sendSMS(String text, int callerNumber, int contactNumber);
+    
+        +void register(int number, ICallable iCallable);
+    
+        +void destroyAll();
+    }
+    
+    +interface IBroadcaster {
+        String connectToTower(int chanel);
+    }
+    
+    +interface ICallable {
+        +void receiveCall(String text, int contactNumber);
+    
+        +void receiveSMS(String text, int contactNumber);
+    
+    }
+    
+    +interface IConnector {
+        void call(String text, int callerNumber, int contactNumber);
+    
+        void sendSMS(String text, int callerNumber, int contactNumber);
+    
+        void register(int number, ICallable iCallable);
+    }
+
+    +class TvTower implements IBroadcaster {
+        -HashMap<Integer, String> tvProgram;
+    
+        +TvTower();
+
+        +String connectToTower(int chanel);
+    }
+
+}
+
+
+@enduml

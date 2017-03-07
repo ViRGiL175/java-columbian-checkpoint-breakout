@@ -1,0 +1,97 @@
+@startuml
+
+package rape.brutal.alex.evaluator {
+
+    +interface IValuable {
+        +int getValue();
+    }
+
+    +class Evaluator {
+        +int getValue(IValuable iValuable);
+    }
+
+    +class Concierge {
+        +Entrance entrance;
+    }
+
+    +class Builder {
+        +Apartment static build(address, buildingType, hasBoiler, hasParking, entrancesCount,
+                hasElevator, hasGarbageChute, floorsCount, apartmentsPerFloor, roomsCount);
+    }
+
+    package rape.brutal.alex.evaluator.building {
+
+        ApartmentBuilding o-- BuildingType
+        ApartmentBuilding o-* Entrance
+        Entrance o-* Apartment
+        Apartment o-- Room
+        Room o- RoomType
+
+        +class ApartmentBuilding implements IValuable {
+            -final int entranceCount;
+            -String address;
+            -BuildingType buildingType;
+            -boolean hasBoiler;
+            -boolean hasParking;
+            -Entrance[] entrances;
+
+            +ApartmentBuilding(String address, BuildingType buildingType,
+                    boolean hasBoiler, boolean hasParking, int entranceCount);
+            +void addEntrance(Entrance entrance);
+        }
+
+        +enum BuildingType {
+            BLOCK,
+            INDIVIDUAL,
+            BRICK_MONOLITH,
+            MONOLITH,
+            PANEL,
+            BREZHNEV,
+            KHRUSHCHEV,
+            STALIN
+        }
+
+        +class Entrance {
+            -final int floorsCount;
+            -final int apartmentsPerFloor;
+            -int number;
+            -boolean hasElevator;
+            -boolean hasGarbageChute;
+            -Apartment[][] apartments;
+            -ApartmentBuilding parentBuilding;
+
+            +Entrance(boolean hasElevator, boolean hasGarbageChute, int floorsCount,
+                    int apartmentsPerFloors, ApartmentBuilding parentBuilding);
+            +void addApartment(Apartment apartment);
+        }
+
+        +class Apartment implements IValuable {
+            -final int roomsCount;
+            -int number;
+            -int floor;
+            -Room[] rooms;
+            -Entrance parentEntrance;
+
+            +Apartment(int roomsCount, Entrance parentEntrance);
+            +void addRoom(Room room);
+            +int getTotalArea();
+        }
+
+        +class Room {
+            -RoomType roomType;
+            -int area;
+
+            +Room(RoomType roomType, int area);
+        }
+
+        +enum RoomType {
+            KITCHEN,
+            BATHROOM,
+            LIVING_ROOM
+        }
+
+    }
+
+}
+
+@enduml

@@ -9,8 +9,8 @@
         <module name="columbian-checkpoint-breakout" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="columbian-checkpoint-breakout" target="1.5" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="columbian-checkpoint-breakout" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

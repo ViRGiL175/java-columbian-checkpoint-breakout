@@ -1,0 +1,256 @@
+@startuml
+
+package rape.brutal.haze.pc {
+
+    package rape.brutal.haze.pc.constructor {
+
+        IUsable <|..TechItem
+
+        Hardware <-[hidden]- IUser
+
+        interface IUsable {
+            +void use();
+        }
+
+        interface IUser {
+            +void use(IUsable);
+        }
+
+        +class Hardware {
+            -int condition;
+
+            #repair(int money);
+
+            +String getHardwareName();
+
+        }
+
+        +class Engineer {
+            #TechItem createItem(int money, String itemName);
+
+            +void repairItem(TechItem techItem, int money);
+        }
+
+        +class TechItem {
+            -HashMap<String, Hardware> hardwareMap;
+
+            +void use();
+
+            ~Hardware getHardware(String hardwareName);
+
+            ~void addHardware(String hardwareName, Hardware hardware);
+
+            +String getItemName();
+        }
+
+    }
+
+    TechItem <|-- PC
+    IComparable <|.PC
+
+    +interface IComparable {
+
+    }
+
+    +class PC {
+        - Motherboard motherboard;
+        - CPU cpu;
+        - RAM ram;
+        - ROM rom;
+        - GPU gpu;
+        - PowerSupply powerSupply;
+
+        ~ PC();
+        ~ void turnOn();
+        ~ void startBios();
+        ~ void turnOff();
+        ~ void work();
+        ~ void testingPerfomance();
+    }
+
+    package rape.brutal.haze.pc.human{
+
+        IUser <|... Human
+        Human <|-- Engineer
+        Engineer <|- Sysadmin
+        Human <|-- Slava
+        Human <|-- Fatih
+
+        +class Sysadmin {
+            + void greeting();
+            + void byeing();
+            + void choising();
+            + void construct();
+        }
+
+        +class Slava {
+            - int slavaChoice;
+            - int choice;
+            - int ringable;
+
+            + void greeting();
+            + void greetingWithSysadmin();
+            + void offerForFatih();
+            + void byeing();
+            + void choising();
+        }
+
+        abstract class Human {
+            ~ abstract void greeting();
+            ~ abstract void byeing();
+        }
+
+        +class Fatih {
+            + int choiseForSlava;
+            + int getChoiseForSlava();
+
+            +void greeting();
+            + void byeing();
+            + void choising();
+        }
+    }
+
+    package rape.brutal.haze.pc.hardware {
+
+        Hardware <|--- Motherboard
+        Hardware <|--- GPU
+        Hardware <|---- CPU
+        Hardware <|---- RAM
+        Hardware <|---- ROM
+        Hardware <|---- PowerSupply
+
+        Motherboard <|- ASUS
+        Motherboard <|-- Gigabyte
+        Motherboard <|-- MSI
+
+        GPU <|- Nvidia
+        GPU <|-- Radeon
+
+        CPU <|- Intel
+        CPU <|-- AMD
+
+        RAM <|- DDR2
+        RAM <|-- DDR3
+        RAM <|-- DDR4
+
+        ROM <|-- HDD
+        ROM <|-- SSD
+        ROM <|-- SSHD
+
+        +class PowerSupply {
+            + void powerOn();
+            + void powerOff();
+        }
+
+        +class HDD {
+            ~ HDD();
+        }
+
+        +class ASUS {
+            ~ ASUS();
+        }
+
+        +class Gigabyte {
+            ~ Gigabyte();
+        }
+
+        +class MSI {
+            ~ MSI();
+        }
+
+        +abstract class Motherboard {
+            # String socket;
+            # String bios;
+            # String ramType;
+            # String chipset;
+            # int hyperTransport;
+        }
+
+        +abstract class ROM {
+            # int readSpeed;
+            # int writeSpeed;
+
+            + void powerOn();
+            + void powerOff();
+            + int scorePoint();
+        }
+
+        +class SSD {
+            ~ SSD();
+        }
+
+        +class SSHD {
+            ~ SSHD();
+        }
+
+        +class DDR2 {
+            ~ DDR2();
+        }
+
+        +class DDR3 {
+            ~ DDR3();
+        }
+
+        +class DDR4 {
+            ~ DDR4();
+        }
+
+        +abstract class RAM {
+            # int frequency;
+            # int size;
+            # int timing;
+            # String type;
+
+            + void powerOn();
+            + void powerOff();
+            + int scorePoint();
+        }
+
+        +abstract class GPU {
+            # int gpuFrequency;
+            # int ram;
+            # int units;
+            # int shaders;
+
+            + abstract void powerOn();
+            + void powerOff();
+        }
+
+        +class Nvidia {
+            ~ Nvidia();
+            + void powerOn();
+        }
+
+        +class Radeon {
+            ~ Radeon();
+            + void powerOn();
+        }
+
+        +abstract class CPU {
+            # String socket;
+            # double frequency;
+            # int generation;
+            # int cache;
+            # int processTechnology;
+
+            + abstract void powerOn();
+            + void powerOff();
+            + void turboBoost();
+            + int scorePoint();
+        }
+
+        +class AMD {
+            ~ AMD();
+            + void powerOn();
+        }
+
+        +class Intel {
+            ~ Intel();
+            + void powerOn();
+        }
+
+    }
+
+}
+
+@enduml

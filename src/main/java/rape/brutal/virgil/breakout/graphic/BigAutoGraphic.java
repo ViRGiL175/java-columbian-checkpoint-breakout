@@ -6,9 +6,9 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 
 import java.io.IOException;
 
-public class BigCarGraphic extends CarGraphic {
+public class BigAutoGraphic extends AutoGraphic {
 
-    public BigCarGraphic(TerminalPosition terminalPosition, String name, TerminalScreen terminalScreen) {
+    public BigAutoGraphic(TerminalPosition terminalPosition, String name, TerminalScreen terminalScreen) {
         super(terminalPosition, name, terminalScreen);
     }
 

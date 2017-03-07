@@ -5,9 +5,9 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 
 import java.io.IOException;
 
-public class AverageCarGraphic extends CarGraphic {
+public class AverageAutoGraphic extends AutoGraphic {
 
-    public AverageCarGraphic(TerminalPosition terminalPosition, String name, TerminalScreen terminalScreen) {
+    public AverageAutoGraphic(TerminalPosition terminalPosition, String name, TerminalScreen terminalScreen) {
         super(terminalPosition, name, terminalScreen);
     }
 
