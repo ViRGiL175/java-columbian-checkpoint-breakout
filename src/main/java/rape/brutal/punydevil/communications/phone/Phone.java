@@ -1,6 +1,5 @@
 package rape.brutal.punydevil.communications.phone;
 
-import rape.brutal.bladerunner.DemoGame;
 import rape.brutal.punydevil.communications.infrastructure.ICallable;
 import rape.brutal.punydevil.communications.infrastructure.IConnector;
 import rape.brutal.punydevil.communications.phone.hardware.*;
@@ -144,7 +143,7 @@ public abstract class Phone implements ICallable {
     }
 
     public void startGame() {
-        new DemoGame().play();
+//        new DemoGame().play();
     }
 
     public void unlock() {

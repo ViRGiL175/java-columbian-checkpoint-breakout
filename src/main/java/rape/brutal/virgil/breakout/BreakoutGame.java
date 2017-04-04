@@ -59,7 +59,7 @@ public class BreakoutGame implements INameable {
     public static final int MANSION_HIT_POINTS = 1000;
     public static final int EVALUATOR_NUMBER = 634356;
     public static final int START_MONEY = 100000000;
-    public static final boolean IS_DEBUG = true;
+    public static final boolean IS_DEBUG = false;
 
     //    Graphic
     private TerminalScreen terminalScreen;
